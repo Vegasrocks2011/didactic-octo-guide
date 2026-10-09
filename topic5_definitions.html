@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Topic 5 definitions – IAL Biology Unit 4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F2F5F1; --sheet:#FFFFFF; --ink:#16241C; --muted:#56655B; --line:#D3DDD3;
+  --leaf:#2D6A3E; --leaf-soft:#E1ECDD; --violet:#4F3FA0; --violet-soft:#ECE9F8; --red:#B5402A; --red-soft:#F8E5E0;
+  --amber:#8A5A00; --amber-soft:#FBF0D9; --focus:#4F3FA0;
+  --body:"Atkinson Hyperlegible",system-ui,"Segoe UI",Arial,sans-serif;
+  --head:"Bricolage Grotesque","Segoe UI",system-ui,Arial,sans-serif;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#121A15; --sheet:#1A241E; --ink:#E6EEE7; --muted:#A3B3A7; --line:#2E3B33;
+  --leaf:#7CC48D; --leaf-soft:#1F3326; --violet:#B6A9F2; --violet-soft:#26213F; --red:#F08A73; --red-soft:#3A221D;
+  --amber:#E9B95A; --amber-soft:#33291A; --focus:#B6A9F2;}}
+:root[data-theme="dark"]{--paper:#121A15; --sheet:#1A241E; --ink:#E6EEE7; --muted:#A3B3A7; --line:#2E3B33;
+  --leaf:#7CC48D; --leaf-soft:#1F3326; --violet:#B6A9F2; --violet-soft:#26213F; --red:#F08A73; --red-soft:#3A221D;
+  --amber:#E9B95A; --amber-soft:#33291A; --focus:#B6A9F2;}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.55 var(--body)}
+h1,h2,h3{font-family:var(--head);line-height:1.15;margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:4px}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px}
+header{padding:36px 0 8px}
+header h1{font-size:clamp(2rem,5vw,3rem);font-weight:800;letter-spacing:-.02em}
+header p{color:var(--muted);margin:.5rem 0 0;max-width:62ch}
+
+/* the three stages are a real sequence, so they are numbered */
+.stages{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:24px 0 16px}
+.stage{border:1.5px solid var(--line);background:var(--sheet);border-radius:12px;padding:12px 14px;text-align:left;cursor:pointer;display:flex;gap:12px;align-items:center}
+.stage .n{font:800 1.6rem var(--head);color:var(--muted);min-width:1.2em}
+.stage b{display:block;font-family:var(--head)}
+.stage span.sub{font-size:.85rem;color:var(--muted)}
+.stage[aria-selected="true"]{border-color:var(--leaf);background:var(--leaf-soft)}
+.stage[aria-selected="true"] .n{color:var(--leaf)}
+@media (max-width:620px){.stages{gap:6px}.stage{padding:8px 10px;gap:8px;flex-direction:column;align-items:flex-start}.stage .n{font-size:1.2rem}.stage span.sub{display:none}.stage b{font-size:.92rem;line-height:1.2}}
+
+.controls{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;font-size:.95rem;margin-bottom:14px}
+.controls select{padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--sheet)}
+.controls label{display:flex;gap:7px;align-items:center}
+.controls input[type=checkbox]{width:18px;height:18px;accent-color:var(--leaf)}
+.counter{margin-left:auto;color:var(--muted)}
+
+.panel{background:var(--sheet);border:1px solid var(--line);border-radius:16px;padding:22px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-bottom:10px;font-size:.85rem;color:var(--muted)}
+.tag{border-radius:999px;padding:1px 9px;background:var(--leaf-soft);color:var(--leaf);font-weight:700}
+.src{font-size:.85rem;color:var(--muted);margin-top:12px}
+.src.dept{color:var(--amber)}
+.warn{margin-top:14px;background:var(--violet-soft);border-left:4px solid var(--violet);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.warn b{font-family:var(--head);color:var(--violet)}
+mark{background:none;color:inherit;font-weight:700;border-bottom:3px solid var(--leaf);padding:0 1px}
+
+/* flashcard: the one bold element */
+.card{perspective:1400px;cursor:pointer}
+.card-in{display:grid;min-height:300px;transition:transform .45s ease;transform-style:preserve-3d}
+.card.flipped .card-in{transform:rotateY(180deg)}
+.face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;padding:28px;display:flex;flex-direction:column;justify-content:center;border:1px solid var(--line);background:var(--sheet);min-width:0}
+@media (max-width:620px){.face{padding:20px}.back .def{font-size:1.1rem}}
+.front{background:var(--leaf);color:#fff;border:none}
+.front h2{font-size:clamp(1.8rem,5vw,2.8rem);font-weight:800;letter-spacing:-.01em}
+.front p{margin:.8rem 0 0;opacity:.85}
+.back{transform:rotateY(180deg)}
+.back .def{font-size:1.25rem;line-height:1.55;max-width:60ch}
+@media (prefers-reduced-motion:reduce){.card-in{transition:none}}
+.card-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;margin-top:16px;align-items:center}
+.btn{border:1.5px solid var(--leaf);background:var(--sheet);color:var(--leaf);border-radius:9px;padding:8px 16px;cursor:pointer;font-weight:700}
+.btn.solid{background:var(--leaf);color:var(--sheet)}
+.btn.no{border-color:var(--red);color:var(--red)}
+.btn.ghost{border-color:var(--line);color:var(--muted)}
+.btn:disabled{opacity:.45;cursor:default}
+.hint{font-size:.85rem;color:var(--muted)}
+
+/* gap fill */
+.gap-def{font-size:1.2rem;line-height:2.3;max-width:62ch}
+.gap{max-width:100%;border:none;border-bottom:2px solid var(--leaf);background:var(--leaf-soft);border-radius:6px 6px 0 0;padding:1px 6px;font-size:1.05rem;min-width:4ch}
+.gap.ok{border-color:var(--leaf);background:var(--leaf-soft)}
+.gap.bad{border-color:var(--red);background:var(--red-soft)}
+.fix{font-size:.85rem;color:var(--red);font-weight:700;margin-left:4px}
+.bank[hidden]{display:none}
+.bank{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.bank button{border:1px dashed var(--leaf);background:var(--paper);border-radius:8px;padding:3px 10px;cursor:pointer}
+.bank button.used{opacity:.4;text-decoration:line-through}
+.result{margin-top:14px;font-weight:700;font-family:var(--head);font-size:1.15rem}
+
+/* write in full */
+textarea{width:100%;min-height:7em;border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--paper);font-size:1.05rem;line-height:1.5;resize:vertical}
+.checklist{list-style:none;padding:0;margin:14px 0 0}
+.checklist li{display:flex;gap:10px;align-items:baseline;padding:4px 0}
+.checklist .i{font-weight:800;min-width:1.4em;text-align:center}
+.found .i{color:var(--leaf)} .missing .i{color:var(--red)} .optional .i{color:var(--muted)}
+.model{margin-top:14px;background:var(--leaf-soft);border-radius:10px;padding:12px 14px}
+.model h3{font-size:.95rem;margin-bottom:4px}
+
+/* progress */
+details.progress{margin:22px 0 40px;background:var(--sheet);border:1px solid var(--line);border-radius:14px;padding:4px 18px 12px}
+details.progress summary{cursor:pointer;font:700 1.1rem var(--head);padding:10px 0}
+.prow{display:grid;grid-template-columns:minmax(0,1fr) repeat(3,4.6rem);gap:6px;align-items:center;padding:5px 0;border-top:1px solid var(--line);font-size:.93rem}
+.prow.head{border-top:none;color:var(--muted);font-size:.8rem}
+.prow button.t{background:none;border:none;text-align:left;padding:0;cursor:pointer;color:var(--ink);text-decoration:underline;text-decoration-color:var(--line)}
+.pill{font-size:.78rem;border-radius:999px;padding:1px 0;text-align:center}
+.pill.yes{background:var(--leaf-soft);color:var(--leaf);font-weight:700}
+.pill.part{background:var(--amber-soft);color:var(--amber);font-weight:700}
+.pill.none{color:var(--muted)}
+@media (max-width:620px){.prow{grid-template-columns:minmax(0,1fr) repeat(3,3.3rem);gap:4px}.pill{font-size:.7rem}.prow button.t{overflow-wrap:anywhere}}
+.reset{background:none;border:none;color:var(--violet);text-decoration:underline;cursor:pointer;padding:0;margin-top:8px}
+.empty{padding:30px;text-align:center;color:var(--muted)}
+footer{font-size:.85rem;color:var(--muted);padding-bottom:40px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Topic 5 definitions</h1>
+  <p>The key terms for spec points 5.1 to 5.21. Learn each one, fill the gaps with the words that earn the marks, then write it out in full. Wherever Pearson has marked a definition, this page uses the mark scheme's wording.</p>
+</header>
+
+<div class="stages" role="tablist" aria-label="Stages">
+  <button class="stage" role="tab" id="tab-0" data-stage="0" aria-selected="true"><span class="n">1</span><span><b>Learn</b><span class="sub">Flashcards</span></span></button>
+  <button class="stage" role="tab" id="tab-1" data-stage="1" aria-selected="false"><span class="n">2</span><span><b>Fill the gaps</b><span class="sub">The words that earn the marks</span></span></button>
+  <button class="stage" role="tab" id="tab-2" data-stage="2" aria-selected="false"><span class="n">3</span><span><b>Write it out</b><span class="sub">The full definition from memory</span></span></button>
+</div>
+
+<div class="controls">
+  <select id="area" aria-label="Which terms">
+    <option value="">All topic 5 terms</option>
+    <option value="photo">Photosynthesis (5.1–5.8)</option>
+    <option value="eco">Energy, ecosystems and climate (5.9–5.21)</option>
+  </select>
+  <label><input type="checkbox" id="todo"> Only ones I haven't got yet</label>
+  <label><input type="checkbox" id="shuffle"> Shuffle</label>
+  <span class="counter" id="counter" aria-live="polite"></span>
+</div>
+
+<main id="stage" class="panel" role="tabpanel" aria-labelledby="tab-0"></main>
+
+<details class="progress" id="progress">
+  <summary>Your progress</summary>
+  <div id="progress-list"></div>
+  <button class="reset" type="button" id="reset">Reset all my progress</button>
+</details>
+
+<footer>Definitions marked “Mark scheme wording” or “Built from mark scheme points” come from Pearson Edexcel mark schemes (© Pearson Education Ltd), reproduced for use within the school only. Those marked “Department wording” were written by the science department because Pearson has not yet asked for that definition. Your progress is saved in this browser only.</footer>
+</div>
+<script>
+const TERMS=[{"id": 0, "term": "Photosynthesis", "area": "photo", "spec": "5.1", "d": "Using energy from light to split water molecules, then combining the hydrogen with carbon dioxide to make glucose, a fuel, and releasing oxygen into the atmosphere.", "keys": [{"k": "energy from light", "alt": ["light energy", "light"], "opt": false}, {"k": "split water", "alt": ["splitting water", "water is split", "photolysis", "split apart water", "break water"], "opt": false}, {"k": "hydrogen", "alt": ["h+", "hydrogen ions", "protons"], "opt": false}, {"k": "carbon dioxide", "alt": ["co2"], "opt": false}, {"k": "glucose", "alt": ["sugar", "carbohydrate"], "opt": false}, {"k": "oxygen", "alt": ["o2"], "opt": false}], "src": "spec", "cite": "", "ref": "", "warn": ""}, {"id": 1, "term": "Photolysis", "area": "photo", "spec": "5.3", "d": "The splitting of water using light energy. It gives electrons to replace those lost by the photosystems, and hydrogen ions used to make reduced NADP. Oxygen is released.", "keys": [{"k": "splitting of water", "alt": ["split water", "water is split", "splitting water", "breaking down water", "breakdown of water"], "opt": false}, {"k": "light energy", "alt": ["light"], "opt": false}, {"k": "electrons", "alt": ["electron"], "opt": false}, {"k": "photosystems", "alt": ["photosystem", "chlorophyll", "psii", "ps2", "psi"], "opt": false}, {"k": "hydrogen ions", "alt": ["protons", "h+", "hydrogen"], "opt": false}, {"k": "reduced NADP", "alt": ["nadph", "reduce nadp", "reduces nadp"], "opt": false}, {"k": "Oxygen", "alt": ["o2"], "opt": true}], "src": "msb", "cite": "Jun 2021 2(b)(iii), Oct 2024 9(a)", "ref": "0621-2(b)(iii)", "warn": ""}, {"id": 2, "term": "Photophosphorylation", "area": "photo", "spec": "5.2", "d": "Adding a phosphate to ADP to make ATP, using energy from light that has excited electrons in chlorophyll.", "keys": [{"k": "phosphate", "alt": ["phosphorylation", "phosphorylating", "phosphorylate", "pi"], "opt": false}, {"k": "ADP", "alt": [], "opt": false}, {"k": "ATP", "alt": [], "opt": false}, {"k": "energy from light", "alt": ["light energy", "light"], "opt": false}, {"k": "excited electrons", "alt": ["excites electrons", "electrons are excited", "high energy electrons", "excited electron"], "opt": false}], "src": "msb", "cite": "Jan 2025 4(b)(i), Oct 2020 3(a)(ii)", "ref": "0125-4(b)(i)", "warn": "ADP is phosphorylated, not hydrolysed, and the reaction needs energy rather than releasing it. Those were the wrong options in the Jan 2025 multiple-choice question."}, {"id": 3, "term": "Hydrolysis of ATP", "area": "photo", "spec": "5.2", "d": "ATP is hydrolysed to ADP and inorganic phosphate, releasing energy that gives an immediate supply of energy for biological processes.", "keys": [{"k": "hydrolysed", "alt": ["hydrolysis", "broken down using water", "water"], "opt": false}, {"k": "ADP", "alt": [], "opt": false}, {"k": "inorganic phosphate", "alt": ["phosphate", "pi"], "opt": false}, {"k": "releasing energy", "alt": ["releases energy", "energy released", "energy is released", "release energy"], "opt": false}, {"k": "immediate", "alt": ["instant", "quick", "immediately"], "opt": false}], "src": "spec", "cite": "", "ref": "", "warn": ""}, {"id": 4, "term": "Cyclic photophosphorylation", "area": "photo", "spec": "5.3", "d": "Excited electrons from photosystem I pass along electron carriers and return to the same photosystem. Only ATP is made: no reduced NADP and no oxygen.", "keys": [{"k": "photosystem I", "alt": ["psi", "ps1", "photosystem 1", "photosystem one"], "opt": false}, {"k": "electron carriers", "alt": ["electron transport chain", "etc", "carriers", "carrier"], "opt": false}, {"k": "return", "alt": ["back to", "returned", "returns", "recycled"], "opt": false}, {"k": "Only ATP", "alt": ["atp only", "just atp"], "opt": false}, {"k": "no reduced NADP", "alt": ["no nadph", "not reduced nadp", "no reduction of nadp"], "opt": false}], "src": "dept", "cite": "", "ref": "", "warn": "Reduced NADP is the molecule made in non-cyclic but not cyclic photophosphorylation (Jun 2021 2(b)(ii))."}, {"id": 5, "term": "Non-cyclic photophosphorylation", "area": "photo", "spec": "5.3", "d": "Light excites electrons in photosystem II and photosystem I. The electrons pass along electron carriers and are used to reduce NADP. Electrons from photolysis of water replace those lost, so ATP, reduced NADP and oxygen are all produced.", "keys": [{"k": "photosystem II", "alt": ["psii", "ps2", "photosystem 2", "photosystem two"], "opt": false}, {"k": "electron carriers", "alt": ["electron transport chain", "etc", "carriers"], "opt": false}, {"k": "reduce NADP", "alt": ["reduced nadp", "nadph", "reduces nadp"], "opt": false}, {"k": "photolysis", "alt": ["splitting water", "water is split", "split water"], "opt": false}, {"k": "replace", "alt": ["replaces", "replacing", "replaced"], "opt": false}, {"k": "oxygen", "alt": ["o2"], "opt": false}], "src": "dept", "cite": "", "ref": "", "warn": "Examiners want ATP made in both cyclic and non-cyclic photophosphorylation; most answers only mention one (Oct 2020 report)."}, {"id": 6, "term": "Light-dependent reactions", "area": "photo", "spec": "5.3", "d": "The reactions on the thylakoid membranes that use light energy, absorbed by chlorophyll, to make ATP and reduced NADP and to release oxygen from photolysis of water.", "keys": [{"k": "thylakoid", "alt": ["grana", "granum", "thylakoids"], "opt": false}, {"k": "absorbed", "alt": ["absorbs", "absorption", "absorb"], "opt": false}, {"k": "ATP", "alt": [], "opt": false}, {"k": "reduced NADP", "alt": ["nadph"], "opt": false}, {"k": "oxygen", "alt": ["o2"], "opt": false}], "src": "dept", "cite": "", "ref": "", "warn": "Say light is absorbed by chlorophyll, not that it “hits” chlorophyll (Oct 2020 and Oct 2024 reports)."}, {"id": 7, "term": "Light-independent reactions (Calvin cycle)", "area": "photo", "spec": "5.4", "d": "The reactions in the stroma that reduce carbon dioxide to make sugars, using the ATP and reduced NADP from the light-dependent reactions.", "keys": [{"k": "stroma", "alt": [], "opt": false}, {"k": "reduce", "alt": ["reduction", "reduces", "reduced"], "opt": false}, {"k": "carbon dioxide", "alt": ["co2"], "opt": false}, {"k": "ATP", "alt": [], "opt": false}, {"k": "reduced NADP", "alt": ["nadph"], "opt": false}], "src": "dept", "cite": "", "ref": "", "warn": ""}, {"id": 8, "term": "Carbon fixation", "area": "photo", "spec": "5.4", "d": "Carbon dioxide combines with RuBP, catalysed by RUBISCO, to form two molecules of GP.", "keys": [{"k": "Carbon dioxide", "alt": ["co2"], "opt": false}, {"k": "RuBP", "alt": ["ribulose bisphosphate", "ribulose"], "opt": false}, {"k": "RUBISCO", "alt": [], "opt": false}, {"k": "GP", "alt": ["glycerate 3-phosphate", "glycerate", "gp"], "opt": false}], "src": "dept", "cite": "", "ref": "", "warn": ""}, {"id": 9, "term": "RUBISCO", "area": "photo", "spec": "5.4", "d": "The enzyme that catalyses carbon fixation: it combines carbon dioxide with RuBP in the Calvin cycle.", "keys": [{"k": "enzyme", "alt": [], "opt": false}, {"k": "carbon fixation", "alt": ["fixes carbon", "fixing carbon", "fixation"], "opt": false}, {"k": "carbon dioxide", "alt": ["co2"], "opt": false}, {"k": "RuBP", "alt": ["ribulose bisphosphate"], "opt": false}], "src": "dept", "cite": "", "ref": "", "warn": "“RUBISCO is used in photosynthesis” lost marks for lack of A level detail (Jun 2025 report). Say it fixes carbon dioxide."}, {"id": 10, "term": "GALP", "area": "photo", "spec": "5.4", "d": "A three-carbon sugar made when GP is reduced using ATP and reduced NADP. Most GALP is used to regenerate RuBP so carbon fixation can continue; the rest makes glucose and other organic molecules.", "keys": [{"k": "GP", "alt": ["glycerate 3-phosphate", "glycerate"], "opt": false}, {"k": "ATP", "alt": [], "opt": false}, {"k": "reduced NADP", "alt": ["nadph"], "opt": false}, {"k": "regenerate RuBP", "alt": ["regenerates rubp", "regeneration of rubp", "remake rubp", "make rubp", "rubp"], "opt": false}, {"k": "glucose", "alt": ["sugar", "starch", "amino acids", "organic"], "opt": false}], "src": "msb", "cite": "Jan 2025 4(b)(iii)", "ref": "0125-4(b)(iii)", "warn": ""}, {"id": 11, "term": "Absorption spectrum", "area": "photo", "spec": "5.6", "d": "A graph showing how much light is absorbed by chloroplast pigments at different wavelengths of light.", "keys": [{"k": "absorbed", "alt": ["absorbs", "absorption", "absorb"], "opt": false}, {"k": "pigments", "alt": ["chlorophyll", "chloroplasts", "chloroplast"], "opt": false}, {"k": "wavelengths", "alt": ["wavelength"], "opt": false}], "src": "qp", "cite": "Oct 2020 1(c)", "ref": "", "warn": "Don't confuse this with the action spectrum (Oct 2020 report)."}, {"id": 12, "term": "Action spectrum", "area": "photo", "spec": "5.6", "d": "The rate of photosynthesis at different wavelengths of light.", "keys": [{"k": "rate of photosynthesis", "alt": ["photosynthesis rate", "rate of photosynthesis", "rate"], "opt": false}, {"k": "wavelengths", "alt": ["wavelength"], "opt": false}], "src": "ms", "cite": "Oct 2020 1(d)", "ref": "1020-1(d)", "warn": "Candidates who confused it with the absorption spectrum lost the mark (Oct 2020 report)."}, {"id": 13, "term": "Rf value", "area": "photo", "spec": "5.7", "d": "The distance moved by the pigment divided by the distance moved by the solvent front.", "keys": [{"k": "distance moved by the pigment", "alt": ["distance moved by pigment", "distance travelled by the pigment", "distance travelled by pigment", "distance moved by the spot", "pigment distance", "distance of pigment"], "opt": false}, {"k": "divided by", "alt": ["÷", "/", "over"], "opt": false}, {"k": "solvent front", "alt": ["solvent"], "opt": false}], "src": "ms", "cite": "Oct 2020 1(e)(ii)", "ref": "1020-1(e)(ii)", "warn": "To identify a pigment, compare its Rf value with the Rf value of a known pigment in the same solvent. “Use the Rf value” alone scores nothing (Jun 2025 report)."}, {"id": 14, "term": "Chromatography (separating pigments)", "area": "photo", "spec": "5.7", "d": "A method that separates pigments by their solubility in the solvent: each pigment moves a specific distance in that solvent, so it has its own Rf value.", "keys": [{"k": "solubility", "alt": ["soluble", "dissolve", "dissolves"], "opt": false}, {"k": "solvent", "alt": [], "opt": false}, {"k": "specific distance", "alt": ["different distances", "different distance", "set distance"], "opt": false}, {"k": "Rf value", "alt": ["rf"], "opt": false}], "src": "msb", "cite": "Jun 2025 7(b)(ii)", "ref": "0625-7(b)(ii)", "warn": ""}, {"id": 15, "term": "Gross primary productivity (GPP)", "area": "eco", "spec": "5.9", "d": "The rate at which energy is transferred into organic molecules in plants by photosynthesis, per unit area per year.", "keys": [{"k": "rate", "alt": [], "opt": false}, {"k": "energy", "alt": [], "opt": false}, {"k": "photosynthesis", "alt": [], "opt": false}, {"k": "per unit area", "alt": ["per m2", "m-2", "per square metre", "area"], "opt": true}, {"k": "per year", "alt": ["per unit time", "time", "yr", "year"], "opt": true}], "src": "dept", "cite": "", "ref": "", "warn": ""}, {"id": 16, "term": "Net primary productivity (NPP)", "area": "eco", "spec": "5.9", "d": "The energy stored in plant biomass after the energy used in plant respiration is taken away: NPP = GPP − R.", "keys": [{"k": "stored", "alt": ["available", "left", "remaining"], "opt": false}, {"k": "biomass", "alt": ["organic molecules"], "opt": false}, {"k": "respiration", "alt": ["r"], "opt": false}, {"k": "GPP − R", "alt": ["gpp-r", "gpp minus r", "gpp take away r", "gpp subtract r"], "opt": false}], "src": "msb", "cite": "Oct 2025 4(a)(ii), Jan 2020 1(a)", "ref": "1025-4(a)(ii)", "warn": "In the Jan 2020 diagram, box B was just “respiration”. Answers that elaborated to “energy lost for respiration” lost the mark."}, {"id": 17, "term": "Efficiency of energy transfer", "area": "eco", "spec": "5.10", "d": "Energy transferred to the next trophic level divided by the energy in the previous trophic level, × 100.", "keys": [{"k": "next trophic level", "alt": ["next level", "higher trophic level", "trophic level 2"], "opt": false}, {"k": "divided by", "alt": ["÷", "/", "over"], "opt": false}, {"k": "previous trophic level", "alt": ["previous level", "lower trophic level", "first trophic level", "energy in", "total energy"], "opt": false}, {"k": "× 100", "alt": ["x 100", "x100", "*100", "times 100", "percentage", "%"], "opt": false}], "src": "dept", "cite": "", "ref": "", "warn": ""}, {"id": 18, "term": "Population", "area": "eco", "spec": "5.11", "d": "Organisms of one species found in a particular area.", "keys": [{"k": "one species", "alt": ["same species", "single species", "one type", "same type"], "opt": false}, {"k": "area", "alt": ["place", "habitat", "location"], "opt": false}], "src": "ms", "cite": "Jun 2021 3(a)(ii)", "ref": "0621-3(a)(ii)", "warn": "Population is the number of one species; biodiversity is about the number of different species (Jan 2020 report)."}, {"id": 19, "term": "Community", "area": "eco", "spec": "5.11", "d": "A group of organisms of different species interacting in a particular area.", "keys": [{"k": "different species", "alt": ["many species", "several species", "more than one species", "all the species"], "opt": false}, {"k": "interacting", "alt": ["interact", "interaction", "depend", "rely"], "opt": false}, {"k": "area", "alt": ["place", "habitat"], "opt": false}], "src": "ms", "cite": "Jun 2021 3(a)(iii)", "ref": "0621-3(a)(iii)", "warn": ""}, {"id": 20, "term": "Habitat", "area": "eco", "spec": "5.11", "d": "The place where an organism lives, which meets the environmental conditions it needs to survive.", "keys": [{"k": "place", "alt": ["area", "location", "where"], "opt": false}, {"k": "lives", "alt": ["live", "living"], "opt": false}, {"k": "environmental conditions", "alt": ["conditions", "needs to survive", "survive"], "opt": true}], "src": "ms", "cite": "Jun 2021 3(a)(i), Oct 2024 5(b)", "ref": "0621-3(a)(i)", "warn": "A habitat is not a niche. Some candidates still chose the niche option in Oct 2024 5(b)."}, {"id": 21, "term": "Ecosystem", "area": "eco", "spec": "5.11", "d": "Organisms interacting with each other and with their non-living environment.", "keys": [{"k": "Organisms", "alt": ["species", "biotic", "living things", "plants and animals", "community", "organism"], "opt": false}, {"k": "interacting", "alt": ["interact", "interaction", "interactions", "interacts"], "opt": false}, {"k": "non-living environment", "alt": ["environment", "abiotic", "non-living", "habitat"], "opt": false}], "src": "ms", "cite": "Jan 2025 1(d), Jan 2020 1(b)(i)", "ref": "0125-1(d)", "warn": "“Interacting” is essential. Without it the answer scores nothing; this has been consistent across series (Jan 2025 report)."}, {"id": 22, "term": "Niche", "area": "eco", "spec": "5.13", "d": "The role of an organism in its habitat.", "keys": [{"k": "role", "alt": ["job", "function", "what it does"], "opt": false}, {"k": "habitat", "alt": ["ecosystem", "environment", "community"], "opt": false}], "src": "ms", "cite": "Jun 2021 3(a)(iv)", "ref": "0621-3(a)(iv)", "warn": "A niche is not where an organism lives: that is its habitat (Oct 2024 report)."}, {"id": 23, "term": "Biotic factor", "area": "eco", "spec": "5.12", "d": "A living factor that affects the numbers or distribution of organisms, such as predation, competition or disease.", "keys": [{"k": "living", "alt": ["alive", "organism"], "opt": false}, {"k": "numbers or distribution", "alt": ["distribution", "numbers", "abundance", "population"], "opt": false}, {"k": "predation", "alt": ["competition", "disease", "predators", "food", "parasites"], "opt": false}], "src": "dept", "cite": "", "ref": "", "warn": "Say what organisms compete for: light, water, mineral ions or space. “Competition” alone is too vague (Oct 2024 report)."}, {"id": 24, "term": "Abiotic factor", "area": "eco", "spec": "5.12", "d": "A non-living factor that affects the numbers or distribution of organisms, such as temperature, light intensity, water, pH or mineral ions.", "keys": [{"k": "non-living", "alt": ["physical", "chemical", "nonliving", "non living"], "opt": false}, {"k": "numbers or distribution", "alt": ["distribution", "numbers", "abundance", "population"], "opt": false}, {"k": "temperature", "alt": ["light", "water", "ph", "mineral", "oxygen", "soil", "salt", "wind"], "opt": false}], "src": "dept", "cite": "", "ref": "", "warn": ""}, {"id": 25, "term": "Succession", "area": "eco", "spec": "5.15", "d": "A series of changes in the species present in a habitat over time.", "keys": [{"k": "changes", "alt": ["change", "changing"], "opt": false}, {"k": "species", "alt": ["types of organism", "organisms", "communities"], "opt": false}, {"k": "over time", "alt": ["time", "with time", "years"], "opt": false}], "src": "ms", "cite": "Oct 2024 5(a)", "ref": "1024-5(a)", "warn": "It's a change in species, not in soil, plants or habitat. This was the most disappointing answer on the Oct 2024 paper."}, {"id": 26, "term": "Pioneer species", "area": "eco", "spec": "5.15", "d": "The first species to colonise bare rock. They break down the rock, and when they die and decompose they form soil, so other species can grow.", "keys": [{"k": "first", "alt": ["colonise", "colonize", "earliest"], "opt": false}, {"k": "bare rock", "alt": ["rock", "bare ground", "bare"], "opt": false}, {"k": "break down", "alt": ["breaks down", "weather", "erode", "breaking down"], "opt": false}, {"k": "decompose", "alt": ["die", "decay", "dead", "humus"], "opt": false}, {"k": "soil", "alt": ["humus"], "opt": false}], "src": "msb", "cite": "Oct 2024 5(c)", "ref": "1024-5(c)", "warn": ""}, {"id": 27, "term": "Climax community", "area": "eco", "spec": "5.15", "d": "The final, stable community at the end of succession, reached after a long time.", "keys": [{"k": "final", "alt": ["last", "end"], "opt": false}, {"k": "stable", "alt": ["no further change", "does not change", "doesn't change", "stays the same", "remains the same"], "opt": false}, {"k": "long time", "alt": ["long period", "many years", "hundreds of years"], "opt": false}], "src": "dept", "cite": "", "ref": "", "warn": "Examiners wanted the idea that a climax community takes a long time to reach (Oct 2024 report)."}, {"id": 28, "term": "Dendrochronology", "area": "eco", "spec": "5.16", "d": "Using the width of tree rings to date them and to show past climate: rings are wider in warmer years, when enzymes work faster and photosynthesis is faster.", "keys": [{"k": "tree rings", "alt": ["rings", "tree ring"], "opt": false}, {"k": "width", "alt": ["wide", "wider", "narrow", "narrower", "thickness", "thick"], "opt": false}, {"k": "climate", "alt": ["temperature", "weather"], "opt": false}, {"k": "photosynthesis", "alt": ["growth", "enzymes", "rubisco"], "opt": false}], "src": "msb", "cite": "Jan 2020 3(d)", "ref": "0120-3(d)(ii)", "warn": "Say whether the rings would be wider or narrower, not just “different” (Jan 2020 report)."}, {"id": 29, "term": "Pollen in peat bogs", "area": "eco", "spec": "5.16", "d": "Pollen is preserved in peat because decomposition is slow there. Pollen from each layer shows which plants grew at that time, and so gives evidence of past climate.", "keys": [{"k": "preserved", "alt": ["preserve", "does not decay", "doesn't decay", "not decomposed"], "opt": false}, {"k": "decomposition", "alt": ["decay", "decompose"], "opt": false}, {"k": "which plants grew", "alt": ["types of plant", "species of plant", "plants that grew", "plant species"], "opt": false}, {"k": "past climate", "alt": ["climate", "temperature"], "opt": false}], "src": "dept", "cite": "", "ref": "", "warn": "Read the pollen diagram carefully: a fair proportion of candidates read it upside down (Jan 2025 report)."}, {"id": 30, "term": "Greenhouse effect", "area": "eco", "spec": "5.17", "d": "Greenhouse gases in the atmosphere let short-wavelength radiation through to the Earth's surface but trap long-wavelength infrared radiation, so the Earth's surface and atmosphere heat up.", "keys": [{"k": "atmosphere", "alt": [], "opt": false}, {"k": "short-wavelength", "alt": ["short wavelength", "short wave", "uv", "visible"], "opt": false}, {"k": "trap", "alt": ["absorb", "traps", "absorbs", "prevent", "re-emit", "reflect"], "opt": false}, {"k": "infrared", "alt": ["ir", "long wavelength", "long-wavelength", "heat"], "opt": false}, {"k": "heat up", "alt": ["warm", "warms", "increase in temperature", "temperature increases", "heats up"], "opt": false}], "src": "msb", "cite": "Jan 2025 7(b)", "ref": "0125-7(b)", "warn": "Common errors: not saying where the gases accumulate, mixing up short and long wavelengths, and not saying what heats up (Jan 2025 report)."}, {"id": 31, "term": "Greenhouse gas", "area": "eco", "spec": "5.17", "d": "A gas in the atmosphere that absorbs infrared radiation, such as carbon dioxide, methane, nitrous oxide or water vapour.", "keys": [{"k": "atmosphere", "alt": ["air"], "opt": false}, {"k": "absorbs", "alt": ["traps", "absorb", "trap"], "opt": false}, {"k": "infrared", "alt": ["ir", "long wavelength", "heat"], "opt": false}, {"k": "carbon dioxide", "alt": ["methane", "nitrous oxide", "water vapour", "co2"], "opt": false}], "src": "dept", "cite": "", "ref": "", "warn": ""}, {"id": 32, "term": "Anthropogenic", "area": "eco", "spec": "5.17", "d": "Caused by humans.", "keys": [{"k": "Caused", "alt": ["resulting from", "due to", "result of", "made by", "produced by"], "opt": false}, {"k": "humans", "alt": ["human", "people", "man", "mankind"], "opt": false}], "src": "ms", "cite": "Jan 2026 8(a)", "ref": "0126-8(a)", "warn": "Name sources precisely: burning fossil fuels, not “using fossil fuels” (Jun 2025 report)."}, {"id": 33, "term": "Anthropogenic climate change", "area": "eco", "spec": "5.17", "d": "Changes to the mean temperature or rainfall, caused by humans.", "keys": [{"k": "mean", "alt": ["average", "long-term", "long term"], "opt": true}, {"k": "temperature", "alt": ["rainfall", "weather patterns"], "opt": false}, {"k": "caused by humans", "alt": ["humans", "human", "people"], "opt": false}], "src": "ms", "cite": "Jun 2021 6(c)(i)", "ref": "0621-6(c)(i)", "warn": "“Global warming” or “weather” on its own is ignored (Jun 2021 mark scheme)."}, {"id": 34, "term": "Extrapolation", "area": "eco", "spec": "5.19", "d": "Extending the trend in the data, such as a line of best fit, beyond the data to make a prediction.", "keys": [{"k": "Extending", "alt": ["extend", "continue", "continuing", "extended"], "opt": false}, {"k": "line of best fit", "alt": ["trend", "pattern", "best fit"], "opt": false}, {"k": "beyond", "alt": ["outside", "past", "after", "future"], "opt": false}, {"k": "prediction", "alt": ["predict", "estimate"], "opt": false}], "src": "msb", "cite": "Oct 2020 9(a)(i)", "ref": "1020-9(a)(i)", "warn": ""}, {"id": 35, "term": "Q10 (temperature coefficient)", "area": "eco", "spec": "5.21", "d": "The rate of reaction at a temperature 10 °C higher divided by the rate at the starting temperature.", "keys": [{"k": "rate", "alt": [], "opt": false}, {"k": "10 °C higher", "alt": ["10 degrees", "10°c", "10 c", "t+10", "ten degrees"], "opt": false}, {"k": "divided by", "alt": ["÷", "/", "over"], "opt": false}], "src": "qp", "cite": "Jan 2026 2(b)", "ref": "", "warn": ""}, {"id": 36, "term": "Effect of temperature on enzyme activity", "area": "eco", "spec": "5.21", "d": "A higher temperature gives enzymes and substrates more kinetic energy, so there are more collisions and more enzyme–substrate complexes form, increasing the rate.", "keys": [{"k": "kinetic energy", "alt": ["ke"], "opt": false}, {"k": "collisions", "alt": ["collide", "collision", "colliding"], "opt": false}, {"k": "enzyme–substrate complexes", "alt": ["enzyme-substrate complexes", "esc", "escs", "enzyme substrate complexes", "complexes"], "opt": false}], "src": "msb", "cite": "Jan 2026 2(a), Oct 2025 7(b)(i)", "ref": "0126-2(a)", "warn": "Link it back to what the question asks about, such as life cycle time (Oct 2025 report)."}, {"id": 37, "term": "Denaturation", "area": "eco", "spec": "5.21", "d": "Above the optimum temperature, bonds holding the enzyme's tertiary structure break, so the active site changes shape and the substrate no longer fits.", "keys": [{"k": "optimum", "alt": [], "opt": false}, {"k": "bonds", "alt": ["hydrogen bonds", "bond"], "opt": false}, {"k": "active site", "alt": [], "opt": false}, {"k": "changes shape", "alt": ["shape changes", "change shape", "changes its shape", "shape"], "opt": false}, {"k": "no longer fits", "alt": ["not complementary", "no longer complementary", "cannot bind", "can't bind", "doesn't fit", "does not fit", "can no longer bind"], "opt": false}], "src": "dept", "cite": "", "ref": "", "warn": "Only use it when the question is about temperatures above the optimum. Examiners listed “denatured” as a common error in answers about cold peat bogs (Jan 2025) and turtle sex determination (Jun 2025)."}];
+const SRC={ms:'Mark scheme wording',msb:'Built from mark scheme points',qp:'Wording from the question paper',spec:'Specification wording',dept:'Department wording: no mark scheme definition yet'};
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{v==null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){}}};
+const prog=(()=>{let p={};try{p=JSON.parse(store.get('def5:progress')||'{}')}catch(e){}return p})();
+const save=()=>store.set('def5:progress',JSON.stringify(prog));
+const P=id=>prog[id]||(prog[id]={});
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const norm=s=>String(s).toLowerCase().replace(/[‘’`]/g,"'").replace(/[−–—]/g,'-').replace(/×/g,'x').replace(/°/g,'').replace(/[^a-z0-9+\-\/÷%x]/g,'');
+const sing=s=>s.replace(/s$/,'');
+const state={stage:0,area:store.get('def5:area')||'',todo:false,shuffle:false,i:0,order:[]};
+
+function done(t,stage){const p=prog[t.id]||{};return stage===0?p.f==='got':stage===1?p.g===t.keys.length:p.w==='got'}
+function list(){
+  let L=TERMS.filter(t=>!state.area||t.area===state.area);
+  if(state.todo)L=L.filter(t=>!done(t,state.stage));
+  if(state.shuffle){if(state.order.length!==L.length||!state.order.every(id=>L.some(t=>t.id===id)))state.order=L.map(t=>t.id).sort(()=>Math.random()-.5);
+    L=state.order.map(id=>L.find(t=>t.id===id))}
+  return L;
+}
+function highlighted(t){
+  let d=esc(t.d);
+  t.keys.forEach(k=>{d=d.replace(esc(k.k),`<mark>${esc(k.k)}</mark>`)});
+  return d;
+}
+function srcLine(t){return `<p class="src ${t.src==='dept'?'dept':''}">${SRC[t.src]}${t.cite?': '+esc(t.cite):''}</p>`}
+function warnBox(t){return t.warn?`<div class="warn"><b>What the examiners say</b><br>${esc(t.warn)}</div>`:''}
+function meta(t){return `<div class="meta"><span class="tag">${t.spec}</span><span>${t.area==='photo'?'Photosynthesis':'Energy, ecosystems and climate'}</span></div>`}
+
+function render(){
+  document.querySelectorAll('.stage').forEach(b=>b.setAttribute('aria-selected',+b.dataset.stage===state.stage));
+  document.getElementById('stage').setAttribute('aria-labelledby','tab-'+state.stage);
+  const L=list();
+  if(state.i>=L.length)state.i=Math.max(0,L.length-1);
+  const el=document.getElementById('stage');
+  document.getElementById('counter').textContent=L.length?`Term ${state.i+1} of ${L.length}`:'';
+  if(!L.length){el.innerHTML=`<p class="empty">${state.todo?'You have got every term in this set at this stage. Untick “Only ones I haven’t got yet” to practise them all, or move to the next stage.':'No terms in this set.'}</p>`;renderProgress();return}
+  const t=L[state.i];
+  [renderFlash,renderGap,renderWrite][state.stage](el,t,L);
+  renderProgress();
+}
+function nav(L){
+  return `<button class="btn ghost" type="button" data-nav="-1" ${state.i===0?'disabled':''}>Previous</button>
+          <button class="btn ghost" type="button" data-nav="1" ${state.i>=L.length-1?'disabled':''}>Next</button>`;
+}
+function wireNav(el,L){el.querySelectorAll('[data-nav]').forEach(b=>b.onclick=()=>{state.i=Math.min(L.length-1,Math.max(0,state.i+ +b.dataset.nav));render();focusMain()})}
+function focusMain(){const f=document.querySelector('#stage .card, #stage .gap, #stage textarea');if(f)f.focus({preventScroll:true})}
+
+/* stage 1 */
+function renderFlash(el,t,L){
+  el.innerHTML=`<div class="card" tabindex="0" role="button" aria-label="Flashcard: ${esc(t.term)}. Press space to turn over." id="card">
+    <div class="card-in"><div class="face front"><h2>${esc(t.term)}</h2><p>Say the definition out loud, then turn the card over.</p></div>
+    <div class="face back">${meta(t)}<p class="def">${highlighted(t)}</p>${warnBox(t)}${srcLine(t)}</div></div></div>
+    <div class="card-actions"><div>${nav(L)}</div>
+    <div><button class="btn no" type="button" id="learning">Still learning</button> <button class="btn solid" type="button" id="got">Got it</button></div></div>
+    <p class="hint">Space turns the card over. The underlined words are the ones that earn the marks; you will need them in stage 2.${prog[t.id]?.f?` Last time: ${prog[t.id].f==='got'?'got it':'still learning'}.`:''}</p>`;
+  const card=el.querySelector('#card');
+  const flip=()=>{card.classList.toggle('flipped');const back=card.classList.contains('flipped');card.setAttribute('aria-label',back?`Definition of ${t.term}: ${t.d}`:`Flashcard: ${t.term}. Press space to turn over.`)};
+  card.onclick=flip;card.onkeydown=e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();flip()}};
+  const mark=v=>{P(t.id).f=v;save();if(state.todo&&v==='got'){render()}else{if(state.i<L.length-1)state.i++;render()}focusMain()};
+  el.querySelector('#learning').onclick=()=>mark('learning');
+  el.querySelector('#got').onclick=()=>mark('got');
+  wireNav(el,L);
+}
+
+/* stage 2 */
+function gapMatch(input,k){
+  const a=sing(norm(input));if(!a)return false;
+  return [k.k,...k.alt].some(x=>{const b=sing(norm(x));return a===b||(b.length>=3&&a.includes(b)&&a.length<=b.length+6)});
+}
+function renderGap(el,t,L){
+  let d=esc(t.d);
+  t.keys.forEach((k,i)=>{d=d.replace(esc(k.k),`\u0000${i}\u0000`)});
+  d=d.replace(/\u0000(\d+)\u0000/g,(m,i)=>`<input class="gap" data-i="${i}" style="width:${Math.max(5,t.keys[i].k.length+2)}ch" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Gap ${+i+1}">`);
+  const bank=t.keys.map(k=>k.k).sort(()=>Math.random()-.5);
+  el.innerHTML=`${meta(t)}<h2 style="font-size:1.6rem;margin-bottom:10px">${esc(t.term)}</h2>
+    <p class="gap-def">${d}</p>
+    <div class="card-actions"><div><button class="btn solid" type="button" id="check">Check</button> <button class="btn ghost" type="button" id="bankbtn" aria-expanded="false">Show word bank</button> <button class="btn ghost" type="button" id="again" hidden>Try again</button></div><div>${nav(L)}</div></div>
+    <div class="bank" id="bank" hidden>${bank.map(w=>`<button type="button" data-w="${esc(w)}">${esc(w)}</button>`).join('')}</div>
+    <div id="res"></div>
+    <p class="hint">Enter checks your answers. Spelling and capitals don't matter much, and accepted alternatives from the mark scheme also count.${prog[t.id]?.g!=null?` Last time: ${prog[t.id].g} out of ${t.keys.length}.`:''}</p>`;
+  const gaps=[...el.querySelectorAll('.gap')];
+  let last=gaps[0];gaps.forEach(g=>g.onfocus=()=>last=g);
+  el.querySelector('#bankbtn').onclick=e=>{const b=el.querySelector('#bank');b.hidden=!b.hidden;e.target.setAttribute('aria-expanded',!b.hidden);e.target.textContent=b.hidden?'Show word bank':'Hide word bank'};
+  el.querySelectorAll('#bank button').forEach(b=>b.onclick=()=>{const target=gaps.find(g=>!g.value)||last;if(target){target.value=b.dataset.w;b.classList.add('used');const nx=gaps.find(g=>!g.value);(nx||target).focus()}});
+  const check=()=>{let n=0;gaps.forEach(g=>{const k=t.keys[g.dataset.i];const ok=gapMatch(g.value,k);n+=ok;g.classList.toggle('ok',ok);g.classList.toggle('bad',!ok);
+      const nxt=g.nextElementSibling;if(nxt&&nxt.classList.contains('fix'))nxt.remove();
+      if(!ok)g.insertAdjacentHTML('afterend',`<span class="fix">${esc(k.k)}</span>`)});
+    P(t.id).g=n;save();
+    el.querySelector('#res').innerHTML=`<p class="result">${n} out of ${t.keys.length}${n===t.keys.length?': all the mark-earning words.':'. The correct words are shown in red.'}</p>${n===t.keys.length?'':warnBox(t)}`;
+    el.querySelector('#again').hidden=n===t.keys.length;renderProgress()};
+  el.querySelector('#check').onclick=check;
+  gaps.forEach(g=>g.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();check()}});
+  el.querySelector('#again').onclick=()=>render();
+  wireNav(el,L);
+}
+
+/* stage 3 */
+function ideaFound(text,k){const a=norm(text),low=' '+String(text).toLowerCase().replace(/[−–—]/g,'-')+' ';
+  return [k.k,...k.alt].some(x=>{const b=norm(x);if(!b)return false;
+    if(b.length<3)return new RegExp('(^|[^a-z0-9])'+b.replace(/[.*+?^${}()|[\]\\\/]/g,'\\$&')+'([^a-z0-9]|$)').test(low);
+    return a.includes(b)||a.includes(sing(b))})}
+function renderWrite(el,t,L){
+  const saved=prog[t.id]?.wt||'';
+  el.innerHTML=`${meta(t)}<h2 style="font-size:1.6rem;margin-bottom:10px">${esc(t.term)}</h2>
+    <label for="w" class="hint">Write the full definition from memory.</label>
+    <textarea id="w" spellcheck="true">${esc(saved)}</textarea>
+    <div class="card-actions"><div><button class="btn solid" type="button" id="wcheck">Check my definition</button></div><div>${nav(L)}</div></div>
+    <div id="wres"></div>`;
+  const ta=el.querySelector('#w');
+  ta.oninput=()=>{P(t.id).wt=ta.value;save()};
+  el.querySelector('#wcheck').onclick=()=>{
+    if(!ta.value.trim()){el.querySelector('#wres').innerHTML='<p class="result">Write your definition first.</p>';return}
+    const req=t.keys.filter(k=>!k.opt),opt=t.keys.filter(k=>k.opt);
+    const rows=t.keys.map(k=>{const f=ideaFound(ta.value,k);const cls=f?'found':k.opt?'optional':'missing';
+      return `<li class="${cls}"><span class="i" aria-hidden="true">${f?'✓':k.opt?'–':'✗'}</span><span>${esc(k.k)}${k.opt?' <span class="hint">(good to include)</span>':''}<span class="sr-only" style="position:absolute;left:-9999px">${f?' found':' not found'}</span></span></li>`}).join('');
+    const got=req.filter(k=>ideaFound(ta.value,k)).length;
+    el.querySelector('#wres').innerHTML=`<p class="result">${got} of ${req.length} key ideas found</p>
+      <ul class="checklist">${rows}</ul>
+      <div class="model"><h3>The definition</h3><p style="margin:0">${highlighted(t)}</p></div>${warnBox(t)}${srcLine(t)}
+      <p class="hint">The checker looks for the key words. If you said the same thing in different words, you decide.</p>
+      <div class="card-actions" style="justify-content:flex-start"><button class="btn no" type="button" id="wno">Not yet</button><button class="btn solid" type="button" id="wyes">I've got it</button></div>`;
+    const mk=v=>{P(t.id).w=v;save();renderProgress();if(state.i<L.length-1&&!state.todo){state.i++;render();focusMain()}else render()};
+    el.querySelector('#wno').onclick=()=>mk('no');el.querySelector('#wyes').onclick=()=>mk('got');
+  };
+  wireNav(el,L);
+}
+
+function pill(t,s){const p=prog[t.id]||{};
+  if(s===0)return p.f==='got'?'<span class="pill yes">Got it</span>':p.f?'<span class="pill part">Learning</span>':'<span class="pill none">–</span>';
+  if(s===1)return p.g==null?'<span class="pill none">–</span>':p.g===t.keys.length?`<span class="pill yes">${p.g}/${t.keys.length}</span>`:`<span class="pill part">${p.g}/${t.keys.length}</span>`;
+  return p.w==='got'?'<span class="pill yes">Got it</span>':p.w?'<span class="pill part">Not yet</span>':'<span class="pill none">–</span>';}
+function renderProgress(){
+  const L=TERMS.filter(t=>!state.area||t.area===state.area);
+  const all=L.filter(t=>done(t,0)&&done(t,1)&&done(t,2)).length;
+  document.querySelector('#progress summary').textContent=`Your progress: ${all} of ${L.length} terms secure in all three stages`;
+  document.getElementById('progress-list').innerHTML=`<div class="prow head"><span>Term</span><span>Learn</span><span>Gaps</span><span>Write</span></div>`+
+    L.map(t=>`<div class="prow"><button class="t" type="button" data-go="${t.id}">${esc(t.term)}</button>${pill(t,0)}${pill(t,1)}${pill(t,2)}</div>`).join('');
+  document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{state.todo=false;document.getElementById('todo').checked=false;const L2=list();state.i=Math.max(0,L2.findIndex(t=>t.id===+b.dataset.go));render();document.getElementById('stage').scrollIntoView({block:'start'});focusMain()});
+}
+
+document.querySelectorAll('.stage').forEach(b=>b.onclick=()=>{state.stage=+b.dataset.stage;state.i=0;render()});
+const area=document.getElementById('area');area.value=state.area;area.onchange=()=>{state.area=area.value;store.set('def5:area',area.value||null);state.i=0;state.order=[];render()};
+document.getElementById('todo').onchange=e=>{state.todo=e.target.checked;state.i=0;render()};
+document.getElementById('shuffle').onchange=e=>{state.shuffle=e.target.checked;state.order=[];state.i=0;render()};
+document.getElementById('reset').onclick=()=>{if(!confirm('Reset all your progress and saved answers on this page?'))return;Object.keys(prog).forEach(k=>delete prog[k]);save();render()};
+render();
+</script>
+</body>
+</html>
